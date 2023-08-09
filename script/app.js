@@ -2,6 +2,11 @@ import { Student } from "./Student.js"
 import { Teacher } from "./Teacher.js"
 
 const users = JSON.parse(localStorage.getItem("users")) || []
+const loggedUser = JSON.parse(localStorage.getItem("loggedUser"))
+
+if(loggedUser!=null){
+  document.getElementById("heading").innerHTML = `${loggedUser.name} Your welcome`
+}
 
 document.addEventListener("DOMContentLoaded", ()=>{
   let signupForm = document.getElementById("signup-form")
@@ -48,6 +53,7 @@ const loginAccount = (e) => {
   for(let i = 0; i < users.length; i++){
     let user = users[i]
     if(user.password === password && user.email === mail && user.role === role){
+      localStorage.setItem("loggedUser", JSON.stringify(users[i]))
       document.getElementById("heading").innerHTML = `${user.name} Your welcome`
       console.log(user.name + " Your welcome")
       return
